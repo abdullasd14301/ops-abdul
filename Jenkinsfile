@@ -22,7 +22,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "sudo docker build -t $IMAGE_NAME ."
+                sh "sudo docker build -t abdul-ops ."
             }
         }
 
@@ -31,14 +31,14 @@ pipeline {
                 script {
                     // Log in to AWS ECR
                     sh """
-                    aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $ECR_REPO
+                    aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 911167886485.dkr.ecr.us-east-1.amazonaws.com
                     """
 
                     // Tag the Docker image
-                    sh "sudo docker tag $IMAGE_NAME:latest $ECR_REPO:latest"
+                    sh "sudo docker tag abdul-ops:latest 911167886485.dkr.ecr.us-east-1.amazonaws.com/abdul-ops:latest"
 
                     // Push the Docker image to ECR
-                    sh "sudo docker push $ECR_REPO:latest"
+                    sh "sudo docker push 911167886485.dkr.ecr.us-east-1.amazonaws.com/abdul-ops:latest"
                 }
             }
         }
